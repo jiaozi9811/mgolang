@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
+	//"log"
 	"os"
 	"strings"
 )
