@@ -1,6 +1,7 @@
 # net/http
 
 tags : golang
+
 ---
 #客户端
 ##http.Get
@@ -91,9 +92,26 @@ type Cookie struct {
 	Unparsed []string // Raw text of unparsed attribute-value pairs
 }
 ```
-#服务端 server
-##type Handler
+
+## 带header的client
+
+```go
+client := &http.Client{
+    CheckRedirect: redirectPolicyFunc,
+}
+resp, err := client.Get("http://example.com")
+
+req, err := http.NewRequest("GET", "http://example.com", nil)
+req.Header.Add("If-None-Match", `W/"wyzzy"`)
+resp, err := client.Do(req)
 ```
+
+# 服务端 server
+
+## type Handler
+
+```go
+
 type Handler interface {
     ServeHTTP(ResponseWriter, *Request)
 }
@@ -181,9 +199,3 @@ type conn struct {
 ##type expectContinueReader struct {
 ##type closeWriter interface {
 
-
-
-
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY3MTUxNTkxNF19
--->

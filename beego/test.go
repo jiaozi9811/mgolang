@@ -1,17 +1,23 @@
 package main
 import (
-	//"bytes"
-	//"io"
-	//"encoding/json"
-	//"net/http"
-    //"os"
     "fmt"
-    "sort"
+    "encoding/json"
 )
+type ColorGroup struct{
+    id int
+    name string
+    colors []string
+}
 
 
 func main(){
-		numbers := []int{-2, -1, 0, 6, 2}
-		sort.Sort(sort.IntSlice(numbers))
-		fmt.Println("IsSorted:", numbers)
+	group:=ColorGroup{
+		id:1,
+		name:"reds",
+		colors: []string{"crimson","red","ruby","maroon"},
+	}
+
+b,err:=json.Marshal(group)
+
+fmt.Println(b,err)
 }
