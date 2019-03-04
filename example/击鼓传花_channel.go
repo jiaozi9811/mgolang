@@ -12,70 +12,67 @@ package main
 import (
 	"flag"
 	"fmt"
-	//"os"
 	"strconv"
+	"time"
 )
 
-var n, m int //定义两个全局变量
+var n, m int
 
-//3.定义节点(协程)
+func main() {
+	flag.Parse()
+	args := flag.Args()
+
+	var err error
+	if args == nil || len(args) < 1 {
+		n, m = 300, 10000
+	} else {
+		n, err = strconv.Atoi(args[0])
+		if err != nil {
+			n = 300
+		}
+		if len(args) < 2 {
+			m = 10000
+		} else {
+			m, err = strconv.Atoi(args[1])
+			if err != nil {
+				m = 10000
+			}
+		}
+	}
+	fmt.Println(n, m)
+
+	result := make(chan int)
+	chs := make([]chan int, n)
+	startw := time.Now()
+	for i := 0; i < n; i++ {
+		chs[i]=make(chan int)
+		go node(i, chs, result)
+	}
+
+	for i := 0; i < m; i++ {
+		chs[0] <- i
+	}
+	<-result
+	fmt.Println(time.Since(startw))
+}
+
 func node(i int, ch []chan int, result chan int) {
 	for {
 		msg := <-ch[i]
-		//fmt.Println("node ", i," got msg ",msg)
+		fmt.Println("node ", i," got msg ",msg)
 		if i >= n-1 {
-			//fmt.Println("msg ", msg," reached last node ",i)
+			fmt.Println("msg ", msg," reached last node ",i)
 			if msg >= m-1 {
 				fmt.Println("final msg send back")
 				result <- msg
 			}
 		} else {
-			//fmt.Println("node ", i," pass msg  ",msg," to next node")
+			fmt.Println("node ", i," pass msg  ",msg," to next node")
 			ch[i+1] <- msg
 		}
 	}
 }
 
-func main() {
-	//1.输入参数处理
-	flag.Parse()
-	args := flag.Args()
-	if args != nil && len(args) > 0 {
-		var err error
-		n, err = strconv.Atoi(args[0])
-		if err != nil {
-			n = 300
-		}
-		m, err = strconv.Atoi(args[1])
-		if err != nil {
-			m = 10000
-		}
-	} else {
-		n = 300
-		m = 10000
-	}
-	fmt.Println("n=", n, "m=", m)
-
-	//2.创建队列/channel
-	//用于结束.go没有join之类的等待同步函数
-	result := make(chan int)
-	chs := make([]chan int, n)
-	for i := 0; i < n; i++ {
-		chs[i] = make(chan int)
-		//5.启动节点(创建协程)
-		go node(i, chs, result)
-	}
-
-	//4.初始化消息
-	//go的channel写也是阻塞的
-	for i := 0; i < m; i++ {
-		//fmt.Println("put msg ", i," into  channel 0")
-		chs[0] <- i
-	}
-
-	//等待结束
-	<-result
-}
 
 //测试结果
 
