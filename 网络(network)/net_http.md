@@ -166,7 +166,8 @@ HandlerFunc type是一个适配器，通过类型转换让我们可以将普通�
 >type HandlerFunc func(ResponseWriter, *Request)
 
 ##type conn struct
-```
+
+```go
 type conn struct {
 	server *Server
 	cancelCtx context.CancelFunc
@@ -184,18 +185,66 @@ type conn struct {
 	hijackedv bool
 }
 ```
-##type ResponseWriter interface
+
+## type ResponseWriter interface
+
 >type ResponseWriter interface {
 
-##type response struct {
-##type Flusher interface {
-##type ResponseWriter interface {
-##type Hijacker interface {
-##type CloseNotifier interface {
-##type chunkWriter struct {
-##type writerOnly struct {
-##type readResult struct {
-##type connReader struct {
-##type expectContinueReader struct {
-##type closeWriter interface {
+## type response struct {
+## type Flusher interface {
+## type ResponseWriter interface {
+## type Hijacker interface {
+## type CloseNotifier interface {
+## type chunkWriter struct {
+## type writerOnly struct {
+## type readResult struct {
+## type connReader struct {
+## type expectContinueReader struct {
+## type closeWriter interface {
 
+```go
+func main() {
+    http.HandleFunc("/hello", func(res http.ResponseWriter, request *http.Request) {
+        res.Write([]byte("hello"))
+    })
+    http.HandleFunc("/index.html",indexM)
+    http.ListenAndServe(":8080", nil)
+}
+func indexM(res http.ResponseWriter,req *http.Request){
+    fmt.Fprintf(res,"index.html")
+}
+//http.ListenAndServe     监听端口
+//http.HandleFunc          定义路由
+```
+
+## 简单的web服务器
+
+```go
+import (
+    "fmt"
+    "log"
+    "net/http"
+    "strings"
+)
+
+func sayhelloName(w http.ResponseWriter, r *http.Request) {
+    r.ParseForm()
+    fmt.Println(r.Form)
+    fmt.Println("path", r.URL.Path)
+    fmt.Println("scheme", r.URL.Scheme)
+    fmt.Println(r.Form["url_long"])
+    for k, v := range r.Form {
+        fmt.Println("key:", k)
+        fmt.Println("val:", strings.Join(v, ""))
+    }
+    fmt.Fprintf(w, "Hello astaxie!")
+}
+
+func main() {
+    http.HandleFunc("/", sayhelloName)
+    err := http.ListenAndServe(":9090", nil)
+    if err != nil {
+        log.Fatal("ListenAndServe: ", err)
+    }
+}
+```
