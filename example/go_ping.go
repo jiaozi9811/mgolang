@@ -1,5 +1,5 @@
 //https://github.com/paulstuart/ping/blob/master/ping.go
-https://github.com/hiberabyss/JustDoIt/blob/master/ping/goping.go
+//https://github.com/hiberabyss/JustDoIt/blob/master/ping/goping.go
 package main
 
 import (

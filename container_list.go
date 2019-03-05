@@ -48,6 +48,3 @@ func main() {
 		fmt.Println(myList.Len()) // 0
 	}()
 }
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMzQ1Mjk4OTM3XX0=
--->
