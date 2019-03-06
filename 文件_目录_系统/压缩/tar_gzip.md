@@ -8,11 +8,15 @@ type Header
 
 - func FileInfoHeader(fi os.FileInfo, link string) (*Header, error)
 - func (h *Header) FileInfo() os.FileInfo
+
 type Reader
+
 - func NewReader(r io.Reader) *Reader
 - func (tr *Reader) Next() (*Header, error)
 - func (tr *Reader) Read(b []byte) (n int, err error)
+
 type Writer
+
 - func NewWriter(w io.Writer) *Writer
 - func (tw *Writer) WriteHeader(hdr *Header) error
 - func (tw *Writer) Write(b []byte) (n int, err error)
@@ -20,7 +24,7 @@ type Writer
 - func (tw *Writer) Close() error
 
 >打完包后一定要用Close()关闭,因为 tar.Writer 使用了缓存，tw.Close()会将缓存中的数据写入到文件中，同时 tw.Close() 还会向 .tar 文件的最后写入结束信息，如果不关闭 tw 而直接退出程序，那么将导致 .tar 文件不完整
-
+---
 >存储在 .tar 文件中的每个文件都由两部分组成：文件信息和文件内容，所以向 .tar 文件中写入每个文件都要分两步：第一步写入文件信息，第二步写入文件数据。对于目录来说，由于没有内容可写，所以只需要写入目录信息即可
 
 ```go
@@ -97,7 +101,7 @@ if err != nil {
 // 打开要解包的文件，srcTar 是要解包的 .tar 文件的路径
 fr, er := os.Open(srcTar)
 if er != nil {
-	return er
+    return er
 }
 defer fr.Close()
 
@@ -136,17 +140,27 @@ for hdr, er := tr.Next(); er != io.EOF; hdr, er = tr.Next() {
 
 ## compress/gzip [top](#archive/compress)
 
-## archive/zip [top](#archive/compress)
+type Header
+type Reader
 
-## compress/bzip2 [top](#archive/compress)
+- func NewReader(r io.Reader) (*Reader, error)
+- func (z *Reader) Reset(r io.Reader) error
+- func (z *Reader) Read(p []byte) (n int, err error)
+- func (z *Reader) Close() error
 
-## compress/flate [top](#archive/compress)
+type Writer
 
-## compress/lzw [top](#archive/compress)
-
-## compress/zlib [top](#archive/compress)
+- func NewWriter(w io.Writer) *Writer
+- func NewWriterLevel(w io.Writer, level int) (*Writer, error) //压缩级别
+- func (z *Writer) Reset(w io.Writer)
+- func (z *Writer) Write(p []byte) (int, error)
+- func (z *Writer) Flush() error
+- func (z *Writer) Close() error
 
 ### compress tar.gz
+
+[tar_gz.go](./tar_gz.go)
+[untar_gz.go](./untar_gz.go)
 
 ```go
 
