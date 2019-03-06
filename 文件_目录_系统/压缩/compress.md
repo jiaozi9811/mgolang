@@ -132,6 +132,9 @@ for hdr, er := tr.Next(); er != io.EOF; hdr, er = tr.Next() {
 }
 ```
 
+[tar_untar.go](./tar_untar.go)
+
+## compress/gzip [top](#archive/compress)
 
 ## archive/zip [top](#archive/compress)
 
@@ -139,8 +142,39 @@ for hdr, er := tr.Next(); er != io.EOF; hdr, er = tr.Next() {
 
 ## compress/flate [top](#archive/compress)
 
-## compress/gzip [top](#archive/compress)
-
 ## compress/lzw [top](#archive/compress)
 
 ## compress/zlib [top](#archive/compress)
+
+### compress tar.gz
+
+```go
+
+package main
+
+import (
+    // ...
+    "compress/gzip" // 这里导入 compress/gzip 包
+    // ...
+)
+
+func Tar(src string, dstTar string, failIfExist bool) (err error) {
+    // ...
+    fw, er := os.Create(dstTar)
+    // ...
+    gw := gzip.NewWriter(fw) // 这里添加一个 gzip.Writer
+    // ...
+    tw := tar.NewWriter(gw) // 这里传入 gw
+    // ...
+}
+
+func UnTar(srcTar string, dstDir string) (err error) {
+    // ...
+    fr, er := os.Open(srcTar)
+    // ...
+    gr, er := gzip.NewReader(fr) // 这里添加一个 gzip.Reader
+    // ...
+    tr := tar.NewReader(gr) // 这里传入 gr
+    // ...
+}
+```
