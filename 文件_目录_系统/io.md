@@ -2,6 +2,9 @@
 
 [TOC]
 
+https://www.cnblogs.com/golove/p/3276678.html
+https://segmentfault.com/a/1190000015591319
+
 io包提供了对I/O原语的基本接口。
 
 本包的基本任务是包装这些原语已有的实现(（)如os包里的原语),使之成为共享的公共接口,这些公共接口抽象出了泛用的函数并附加了一些相关的原语的操作
@@ -77,6 +80,28 @@ for {
 通过io.Reader实现
 [Read_v2.go](./code/Read_v2.go)
 
+#### 读取文件
+
+```go
+func main() {
+    file, err := os.Open("./proverbs.txt")
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
+    defer file.Close()
+
+    p := make([]byte, 4)
+    for {
+        n, err := file.Read(p)
+        if err == io.EOF {
+            break
+        }
+        fmt.Print(string(p[:n]))
+    }
+}
+```
+
 ### type Writer interface
 
 ```go
@@ -118,6 +143,72 @@ func main() {
 ```
 
 [实现一个Writer.go](./code/Writer.go)
+
+#### 写入文件
+
+```go
+func main() {
+    proverbs := []string{
+        "Channels orchestrate mutexes serialize\n",
+        "Cgo is not Go\n",
+        "Errors are values\n",
+        "Don't panic\n",
+    }
+    file, err := os.Create("./proverbs.txt")
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
+    defer file.Close()
+
+    for _, p := range proverbs {
+        // file 类型实现了 io.Writer
+        n, err := file.Write([]byte(p))
+        if err != nil {
+            fmt.Println(err)
+            os.Exit(1)
+        }
+        if n != len(p) {
+            fmt.Println("failed to write data")
+            os.Exit(1)
+        }
+    }
+    fmt.Println("file write done")
+}
+```
+
+#### 写入标准输出
+
+```go
+package main
+
+import(
+    "fmt"
+    "os"
+)
+
+func main() {
+    proverbs := []string{
+        "Channels orchestrate mutexes serialize\n",
+        "Cgo is not Go\n",
+        "Errors are values\n",
+        "Don't panic\n",
+    }
+
+    for _, p := range proverbs {
+        // 因为 os.Stdout 也实现了 io.Writer
+        n, err := os.Stdout.Write([]byte(p))
+        if err != nil {
+            fmt.Println(err)
+            os.Exit(1)
+        }
+        if n != len(p) {
+            fmt.Println("failed to write data")
+            os.Exit(1)
+        }
+    }
+}
+```
 
 ### type ByteReader interface
 
@@ -177,6 +268,10 @@ type Seeker interface {
 
 Seek方法设定下一次读写的位置：偏移量为offset，校准点由whence确定：0表示相对于文件起始；1表示相对于当前位置；2表示相对于文件结尾。Seek方法返回新的位置以及可能遇到的错误
 
+>如果 whence 为 0：表示从数据的开头开始移动指针。
+>如果 whence 为 1：表示从数据的当前指针位置开始移动指针。
+>如果 whence 为 2：表示从数据的尾部开始移动指针。
+
 ### type ReaderAt interface
 
 ReadAt从底层输入流的偏移量off位置读取len(p)字节数据写入p
@@ -229,18 +324,64 @@ func CopyN(dst Writer, src Reader, n int64) (written int64, err error)
 func MultiReader(readers ...Reader) Reader
 func MultiWriter(writers ...Writer) Writer
 
-### ReadFull
+### io.Copy(dst Writer, src Reader)
 
-### 1
+func Copy(dst Writer, src Reader) (written int64, err error)
 
-### 2
+将src的数据拷贝到dst，直到在src上到达EOF或发生错误。返回拷贝的字节数和遇到的第一个错误
 
-### 4
+```go
+func main() {
+    file, err := os.Open("./proverbs.txt")
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
+    defer file.Close()
 
-### 5
+    if _, err := io.Copy(os.Stdout, file); err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
+}
+```
 
-### 6
+### io.WriteString
 
-### 7
+func WriteString(w Writer, s string) (n int, err error)
 
-### 8
+WriteString函数将字符串s的内容写入w中。如果w已经实现了WriteString方法，函数会直接调用该方法。
+
+```go
+func main() {
+    file, err := os.Create("./magic_msg.txt")
+    if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
+    defer file.Close()
+    if _, err := io.WriteString(file, "Go is fun!"); err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
+}
+```
+
+### ReadFull|ReadAtLeast
+
+func ReadFull(r Reader, buf []byte) (n int, err error)
+
+ReadFull从r精确地读取len(buf)字节数据填充进buf。函数返回写入的字节数和错误（如果没有读取足够的字节）
+
+func ReadAtLeast(r Reader, buf []byte, min int) (n int, err error)
+ReadAtLeast从r至少读取min字节数据填充进buf
+
+### MultiReader|MultiWriter
+
+func MultiReader(readers ...Reader) Reader
+
+MultiReader返回一个将提供的Reader在逻辑上串联起来的Reader接口。他们依次被读取。当所有的输入流都读取完毕，Read才会返回EOF。如果readers中任一个返回了非nil非EOF的错误，Read方法会返回该错误
+
+func MultiWriter(writers ...Writer) Writer
+
+MultiWriter创建一个Writer接口，会将提供给其的数据写入所有创建时提供的Writer接口
