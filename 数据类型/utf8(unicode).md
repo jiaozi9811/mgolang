@@ -3,6 +3,8 @@
 >utf8包实现了对utf-8文本的常用函数和常数的支持
 >包括rune和utf-8编码byte序列之间互相翻译的函数
 
+[统计字数](./code/wordcount.go)
+
 ```go
 // 编码所需的基本数字
 const (

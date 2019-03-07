@@ -72,14 +72,6 @@ fmt.Printf("% x", buf.Bytes())
 ```
 
 ```go
-
-```
-
-```go
-
-```
-
-```go
 //PutUvarint
 buf := make([]byte, binary.MaxVarintLen64)
 
@@ -116,20 +108,4 @@ for _, b := range inputs {
     }
     fmt.Println(x)
 }
-```
-
-```go
-
-```
-
-```go
-
-```
-
-```go
-
-```
-
-```go
-
 ```

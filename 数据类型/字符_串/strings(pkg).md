@@ -1,0 +1,78 @@
+查找操作
+func Contains(s, substr string) bool
+func Index(s, sep string) int
+func Count(s, sep string) int
+重复操作
+func Replace(s, old, new string, n int) string
+删除操作
+func Trim(s string, cutset string) string
+大小写转换
+func Title(s string) string
+func ToLower(s string) string
+func ToUpper(s string) string
+字符串前缀后缀
+func HasPrefix(s, prefix string) bool
+func HasSuffix(s, suffix string) bool
+字符串分割
+func Split(s, sep string) []string
+func Fields(s string) []string
+
+strings
+查找字符串
+func Contains(s,substr string) bool       // 子串substr在s中，返回true
+func ContainsAny(s,char string) bool      // chars中任何一个字符在s中存在，返回true
+func ContainsRune(s string,r rune) bool   // Unicode代码点r在s中，返回true
+
+计数
+func Count(s, sep string) int     子字符串出现次数
+
+分割字符串
+Fields 和 FieldsFunc
+func Fields(s string) []string    用空格分隔字符串s，以slice形式返回
+func FieldsFunc(s string, f func(rune) bool) []string
+
+Split 和 SplitAfter、 SplitN 和 SplitAfterN
+func Split(s, sep string) []string { return genSplit(s, sep, 0, -1) }
+func SplitAfter(s, sep string) []string { return genSplit(s, sep, len(sep), -1) }
+func SplitN(s, sep string, n int) []string { return genSplit(s, sep, 0, n) }
+func SplitAfterN(s, sep string, n int) []string { return genSplit(s, sep, len(sep), n) }
+它们都调用了 genSplit 函数
+如果sep为空，相当于分成一个个的UTF-8字符
+Split(s, sep) 和 SplitN(s, sep, -1) 等价；SplitAfter(s, sep) 和 SplitAfterN(s, sep, -1) 等价
+Split 会将 s 中的 sep 去掉，而 SplitAfter 会保留 sep
+带 N 的方法可以通过最后一个参数 n 控制返回的结果中的 slice 中的元素个数，当 n < 0 时，返回所有的子字符串；当 n == 0 时，返回的结果是 nil；当 n > 0 时，表示返回的 slice 中最多只有 n 个元素，其中，最后一个元素不会分割
+
+
+func HasPrefix(s, prefix string) bool     // s 中是否以 prefix 开始
+func HasSuffix(s, suffix string) bool {   // s 中是否以 suffix 结尾
+    return len(s) >= len(suffix) && s[len(s)-len(suffix):] == suffix
+}
+
+
+字符串出现的位置
+func Index(s, sep string) int       // 在s中查找 sep 的第一次出现，返回第一次出现的索引
+func IndexAny(s, chars string) int          // chars中任何一个Unicode代码点在s中首次出现的位置
+func IndexFunc(s string, f func(rune) bool) int     // 查找字符 c 在 s 中第一次出现的位置，其中 c 满足 f(c) 返回 true
+func IndexRune(s string, r rune) int        // Unicode 代码点 r 在 s 中第一次出现的位置
+
+// 有三个对应的查找最后一次出现的位置
+func LastIndex(s, sep string) int
+func LastIndexAny(s, chars string) int
+func LastIndexFunc(s string, f func(rune) bool) int
+
+
+JOIN 操作
+func Join(a []string, sep string) string
+
+重复字符串
+func Repeat(s string, count int) string
+
+替换字符串
+func Replace(s, old, new string, n int) string  //用new替换s中的old，一共替换n个，如果n< 0，则全部替换
+func ReplaceAll(s, old, new string) string
+
+func ToLower(s string) string
+func ToUpper(s string) string
+
+去除字符串
+func Trim(s string, cutset string) string
