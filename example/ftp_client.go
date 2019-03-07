@@ -1,4 +1,4 @@
-//https://github.com/shiyanlou/golang-ftp-client/blob/master/ftp.go#L291:6
+//https://github.com/shiyanlou/golang-ftp-client/blob/master/ftp.go
 package ftp
 
 import (
