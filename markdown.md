@@ -154,6 +154,20 @@ Mike |  32
 
 ## 流程图
 
+## 折叠details
+
+<details open>
+  <summary>点击时的区域标题：点击查看详细内容</summary>
+  <p> - 测试 测试测试</p>
+    <pre><code>  title，value，callBack可以缺省  </code>  </pre>
+</details>
+
+- summary：折叠语法展示的摘要
+- details：折叠语法标签
+- pre：以原有格式显示元素内的文字是已经格式化的文本
+- blockcode：表示程序的代码块
+- code：指定代码范例
+
 ## 注脚
 
 脚注是在需要标记脚注文字的后面增加一个方括号，方括号中的内容必须以^开头，再接着是数字、字符串标记

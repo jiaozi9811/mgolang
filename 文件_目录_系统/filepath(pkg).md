@@ -1,4 +1,4 @@
-path/filepath
+# path/filepath
 
 func IsAbs(path string) bool            //返回路径是否是一个绝对路径
 func Abs(path string) (string, error)       //返回path代表的绝对路径，如果path不是绝对路径，会加入当前工作目录以使之成为绝对路径
@@ -19,15 +19,3 @@ func Glob(pattern string) (matches []string, err error)
 type WalkFunc
 func Walk(root string, walkFn WalkFunc) error
 func HasPrefix(p, prefix string) bool
-
-
-
-
-
-
-
-
-
-
-
-
