@@ -22,6 +22,9 @@ go的并发同步模型来自一个叫作通信顺序进程(communicating sequen
 
 
 ## 通道(channel)
+
+[task-control.go](./code/task_control.go)
+
 unbuffered :=make(chan type)	无缓冲通道
 buffered :=make(chan type,len)	有缓冲通道
 

@@ -1,22 +1,28 @@
-os
-    O_RDONLY int = syscall.O_RDONLY // 只读模式打开文件
-    O_WRONLY int = syscall.O_WRONLY // 只写模式打开文件
-    O_RDWR   int = syscall.O_RDWR   // 读写模式打开文件
-    O_APPEND int = syscall.O_APPEND // 写操作时将数据附加到文件尾部
-    O_CREATE int = syscall.O_CREAT  // 如果不存在将创建一个新文件
-    O_EXCL   int = syscall.O_EXCL   // 和O_CREATE配合使用，文件必须不存在
-    O_SYNC   int = syscall.O_SYNC   // 打开文件用于同步I/O
-    O_TRUNC  int = syscall.O_TRUNC  // 如果可能，打开时清空文件
+# os
 
+[TOC]
 
-    Stdin  = NewFile(uintptr(syscall.Stdin), "/dev/stdin")
-    Stdout = NewFile(uintptr(syscall.Stdout), "/dev/stdout")
-    Stderr = NewFile(uintptr(syscall.Stderr), "/dev/stderr")
+## 读写模式
+
+O_RDONLY int = syscall.O_RDONLY // 只读模式打开文件
+O_WRONLY int = syscall.O_WRONLY // 只写模式打开文件
+O_RDWR   int = syscall.O_RDWR   // 读写模式打开文件
+O_APPEND int = syscall.O_APPEND // 写操作时将数据附加到文件尾部
+O_CREATE int = syscall.O_CREAT  // 如果不存在将创建一个新文件
+O_EXCL   int = syscall.O_EXCL   // 和O_CREATE配合使用，文件必须不存在
+O_SYNC   int = syscall.O_SYNC   // 打开文件用于同步I/O
+O_TRUNC  int = syscall.O_TRUNC  // 如果可能，打开时清空文件
+
+## Stdin Stdout Stderr
+
+Stdin  = NewFile(uintptr(syscall.Stdin), "/dev/stdin")
+Stdout = NewFile(uintptr(syscall.Stdout), "/dev/stdout")
+Stderr = NewFile(uintptr(syscall.Stderr), "/dev/stderr")
 
 var Args []string     //Args保管了命令行参数，第一个是程序名
 
+## 打开一个文件：OpenFile
 
-打开一个文件：OpenFile
 func OpenFile(name string, flag int, perm FileMode) (*File, error)
 
 打开一个文件，一般通过 Open 或 Create，我们看这两个函数的实现。
@@ -24,21 +30,20 @@ func Open(name string) (*File, error) {    return OpenFile(name, O_RDONLY, 0) }
 
 func Create(name string) (*File, error) {    return OpenFile(name, O_RDWR|O_CREATE|O_TRUNC, 0666) }
 
+## 读取文件内容：Read
 
-读取文件内容：Read
 func (f *File) Read(b []byte) (n int, err error)
 func (f *File) ReadAt(b []byte, off int64) (n int, err error)
 Read 和 ReadAt 的区别：前者从文件当前偏移量处读，且会改变文件当前的偏移量；而后者从 off 指定的位置开始读，且不会改变文件当前偏移量
 
+##  数据写入文件：Write
 
-数据写入文件：Write
 func (f *File) Write(b []byte) (n int, err error)
 
+## 关闭文件：Close
 
-关闭文件：Close
+## 改变文件偏移量：Seek
 
-
-改变文件偏移量：Seek
 文件偏移量是指执行下一个Read或Write操作的文件其实位置，会以相对于文件头部起始点的文件当前位置来表示。文件第一个字节的偏移量为0
 func (f *File) Seek(offset int64, whence int) (ret int64, err error)
 file.Seek(0, os.SEEK_SET)    // 文件开始处
@@ -47,14 +52,15 @@ file.Seek(-1, SEEK_END)        // 文件最后一个字节
 file.Seek(-10, SEEK_CUR)     // 当前位置前10个字节
 file.Seek(1000, SEEK_END)    // 文件结尾处的下1001个字节
 
+## 截断文件
 
-截断文件
 trucate 和 ftruncate 系统调用将文件大小设置为 size 参数指定的值；
 Go 语言中相应的包装函数是 os.Truncate 和 os.File.Truncate。
 func Truncate(name string, size int64) error
 func (f *File) Truncate(size int64) error
 
-文件属性
+## 文件属性
+
 文件属性具体信息通过 os.FileInfo 接口获取
 函数 Stat、Lstat 和 File.Stat 可以得到该接口的实例。这三个函数对应三个系统调用：stat、lstat 和 fstat
 
@@ -62,43 +68,48 @@ stat会返回所命名文件的相关信息
 lstat 与 stat 类似，区别在于如果文件是符号链接，那么所返回的信息针对的是符号链接自身（而非符号链接所指向的文件）。
 fstat 则会返回由某个打开文件描述符（Go 中则是当前打开文件 File）所指代文件的相关信息。
 
+## 改变文件时间戳
 
-改变文件时间戳
 func Chtimes(name string, atime time.Time, mtime time.Time) error
 
-文件属主
+## 文件属主
 
 func Chown(name string, uid, gid int) error
 func Lchown(name string, uid, gid int) error
 func (f *File) Chown(uid, gid int) error
 
+## 文件权限
 
-文件权限
 os.Chmod 和 os.File.Chmod 可以修改文件权限（包括 sticky 位），分别对应系统调用 chmod 和 fchmod
 
-目录与链接
+## 目录与链接
+
 func Link(oldname, newname string) error
 Link 创建一个名为 newname 指向 oldname 的硬链接。如果出错，会返回 *LinkError 类型的错误。
+
+## Remove
+
 func Remove(name string) error
 Remove 删除 name 指定的文件或目录。如果出错，会返回 *PathError 类型的错误。如果目录不为空，Remove 会返回失败
 
-更改文件名
-func Rename(oldpath, newpath string) error
+## 更改文件名  func Rename(oldpath, newpath string) error
 
-符号链接
+## 符号链接
+
 func Symlink(oldname, newname string) error
 Symlink 创建一个名为 newname 指向 oldname 的符号链接。如果出错，会返回 *LinkError 类型的错误
 
 func Readlink(name string) (string, error)
 Readlink 获取 name 指定的符号链接指向的文件的路径
 
-创建和移除目录
+## 创建和移除目录
+
 func Mkdir(name string, perm FileMode) error
 Mkdir 使用指定的权限和名称创建一个目录
 
 func RemoveAll(path string) error
 RemoveAll 删除 path 指定的文件，或目录及它包含的任何下级对象
 
+## 读目录 Readdirnames
 
-读目录
 func (f *File) Readdirnames(n int) (names []string, err error)

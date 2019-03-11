@@ -91,23 +91,8 @@ fmt.Println(netIp)
 >func LookupPort(network, service string) (port int, err error)
 >func LookupTXT(name string) ([]string, error)
 >net.JoinHostPort("127.0.0.1", "8080")
-```go
-host,_:=net.LookupHost("www.google.com")
-domain,_ := net.ResolveIPAddr("","www.google.com")
-addr,_:=net.LookupAddr("8.8.8.8")
-cname,_:=net.LookupCNAME("www.google.com")
-port,_:=net.LookupPort("tcp","https|telnet")//查询端口
-ltxt,_:=net.LookupTXT("google.com")//查找DNS信息
-/*
-[69.171.234.29 2404:6800:4005:80e::2004]
-69.171.234.29
-[google-public-dns-a.google.com.]
-www.google.com.
-443
-[docusign=05958488-4752-4ef2-95eb-aa7ba8a3bd0e globalsign-smime-dv=CDYX+XFHUw2wml6/Gb8+59BsH31KzUr6c1l2BPvqKX8= v=spf1 include:_spf.google.com ~all facebook-domain-verification=22rm551cu4k0ab0bxsw536tlds4h95]
-66.220.149.32
-*/
-```
+
+
 
 ## 解析ip地址
 
