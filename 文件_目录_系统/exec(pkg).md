@@ -2,6 +2,8 @@
 
 [TOC]
 
+[shellexec.go](./code/shellexec.go)
+
 ## exec进程
 
 os 包及其子包 os/exec 提供了创建进程的方法

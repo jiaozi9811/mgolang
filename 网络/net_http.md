@@ -76,6 +76,15 @@ func HandleFunc(pattern string, handler func(ResponseWriter, *Request))
 
 回复请求name指定的文件或者目录的内容
 
+### 加载图片或文件
+
+```go
+func foo(w http.ResponseWriter, r *http.Request) {
+    fp := path.Join(".", "gopherbw.png")
+    http.ServeFile(w, r, fp)
+}
+```
+
 ## func SetCookie(w ResponseWriter, cookie *Cookie)
 
 在w的头域中添加Set-Cookie头

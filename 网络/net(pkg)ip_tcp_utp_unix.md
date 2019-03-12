@@ -50,8 +50,18 @@ func (lc *ListenConfig) ListenPacket(ctx context.Context, network, address strin
 
 ## type Listener
 
+```go
+type Listener interface {
+    Addr() Addr// Addr返回该接口的网络地址
+    Accept() (c Conn, err error)// Accept等待并返回下一个连接到该接口的连接
+    Close() error//Close关闭该接口,并使任何阻塞的Accept操作都会不再阻塞并返回错误
+}
+```
+
 func FileListener(f *os.File) (ln Listener, err error)
 func Listen(network, address string) (Listener, error)
+
+[listen and accept and read header](./code/net_listen_accept.go)
 
 ## type PacketConn 代表通用的面向数据包的网络连接
 
@@ -82,6 +92,21 @@ func (c *IPConn) WriteTo(b []byte, addr Addr) (int, error)
 func (c *IPConn) WriteToIP(b []byte, addr *IPAddr) (int, error)
 
 ## type TCPAddr
+
+查找几个空闲的端口
+[find_empty_port](./code/_find_empty_port.go)
+
+```go
+for len(ports)<5{
+    addr,_:=net.Listen("tcp","localhost:0")
+    defer addr.Close()
+
+    _,sport,_:=net.SplitHostPort(addr.Addr().String())
+    //port:=addr.Addr().(*net.TCPAddr).Port
+    port,_:=strconv.Atoi(sport)
+    ports=append(ports,port)
+}
+```
 
 func ResolveTCPAddr(network, address string) (*TCPAddr, error)
 func (a *TCPAddr) Network() string
