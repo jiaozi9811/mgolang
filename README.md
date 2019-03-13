@@ -1,5 +1,7 @@
 # mgolang
 
+<https://github.com/hyper0x/Golang_Puzzlers>
+
 ## network
 
 ### net package

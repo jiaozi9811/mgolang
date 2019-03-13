@@ -2,7 +2,9 @@
 
 [TOC]
 
-type CancelFunc func()
+[context](./code/context.go)
+
+## type CancelFunc func()
 
 ## type Context interface
 

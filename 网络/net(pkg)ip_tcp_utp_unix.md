@@ -13,6 +13,8 @@ Pipe创建一个内存中的同步、全双工网络连接。连接的两端都�
 
 ## type Conn
 
+[listen-accept](./code/net_conn_listen_accept.go)
+
 ```go
 type Conn interface{
     Read(b []byte) (n int, err error)

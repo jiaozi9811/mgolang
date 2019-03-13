@@ -13,6 +13,19 @@ import (
 	"unicode/utf8"
 )
 
+func count1(){
+	NWORDS := make(map[string]int)
+	pattern := regexp.MustCompile("[a-z]+")
+	if content, err := ioutil.ReadFile("http://norvig.com/big.txt"); err == nil {
+			for _, w := range pattern.FindAllString(strings.ToLower(string(content)), -1) {
+					NWORDS[w]++;
+			}
+	} else {
+			panic("Failed loading training data.  Get it from http://norvig.com/big.txt.")
+	}
+	fmt.Printf("%+v",NWORDS)
+}
+
 type Pair struct {
 	Key   string
 	Value int
