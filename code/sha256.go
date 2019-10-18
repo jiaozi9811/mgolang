@@ -7,6 +7,7 @@ import (
   "os"
 )
 
+//字符串
 func Sha256String(s string) (string,error){
   var hashValue string
   hash256 := sha256.New()
@@ -21,6 +22,7 @@ func Sha256String(s string) (string,error){
   return hashValue,nil
 }
 
+//文件
 func Sha256File(s string) (string,error){
   var hashValue string
   fileofopen,err:=os.Open(s)
