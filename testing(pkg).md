@@ -88,5 +88,21 @@ func TestMain(m *testing.M)
 使用的是 cover 相关的工具（go test -cover、go tool cover）。虽然 testing 包提供了 cover 相关函数，不过它们是给 cover 的工具使用的
 
 
+## benchmark
+
+benchmark函数一般以Benchmark开头
+benchmark的case一般会跑b.N次，而且每次执行都会如此
+在执行过程中会根据实际case的执行时间是否稳定会增加b.N的次数，以达到稳定
+
+```
+func BenchmarkAll(b *testing.B){
+    for n:=0;n<b.N;n++{
+    //function()
+    }
+}
+
 
 httptest-HTTP测试辅助工具
+
+
+

@@ -4,6 +4,9 @@
 
 [context](./code/context.go)
 
+- 不要传入一个nil的Context，不确定要用什么Context时传一个context.TODO()
+- context包提供了Background()、TODO()两个空的Context
+
 ## type CancelFunc func()
 
 ## type Context interface
