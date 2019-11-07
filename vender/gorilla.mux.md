@@ -101,7 +101,7 @@ mux支持为路由添加中间件
 
 
 
-```
+```go
 package main
 
 import (
@@ -160,7 +160,6 @@ func main()  {
 	r.Use(TestMiddleware)
 	http.ListenAndServe(":3000", r)
 }
-
 
 func HomeHandler(w http.ResponseWriter,r *http.Request)  {
 	w.WriteHeader(http.StatusOK)
