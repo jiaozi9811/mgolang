@@ -179,7 +179,7 @@ func HostHandler(w http.ResponseWriter,r *http.Request)  {
 func GetUserHandler(w http.ResponseWriter,r *http.Request)  {
 	vars:=mux.Vars(r)
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w,"this is get user, and the user id is ",vars["id"])
+	fmt.Fprintf(w,"this is get user, and the user id is %v",vars["id"])
 }
 func TestMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter,r *http.Request) {
