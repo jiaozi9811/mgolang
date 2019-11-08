@@ -10,38 +10,41 @@ https://www.gorillatoolkit.org/pkg/mux
 https://www.jianshu.com/p/8ade70e51210
 
 mux 名称来源于 HTTPrequest multiplexer,类似于官方包http.ServeMux
+
 mux.Router将定义一个路由列表，其中每一个路由定义一个对应的请求url及处理方法
 
 ## 使用
-
+```
 r:=mux.Router()                 初始化路由
 r.HandleFunc("/",HomeHandler)   路由注册
 func HomeHandler(w http.ResponseWriter,r *http.Request){
     w.WriteHeader(http.StatusOK)
     fmt.Fprintf(w,"this is home")
 }
-
+```
 ### 带变量的url路由注册
-r.HandleFunc("/articles/{category}/{id:[0-9]+}", ArticleHandler)
+```r.HandleFunc("/articles/{category}/{id:[0-9]+}", ArticleHandler)```
 
 ### 组合使用
-r.HandleFunc("/products",ProductsHandler).Host("www.example.com").Methods("GET").Schemes("http")
+```r.HandleFunc("/products",ProductsHandler).Host("www.example.com").Methods("GET").Schemes("http")```
 
 ### 子路由
+```
 r:=mux.NewRouter()
 s:=r.PathPrefix("/products").Subrouter()
 s.handleFunc("/",ProductsHandler)
 s.HandleFunc("/{key}/",ProductHandler)
+```
 
 ### 定义路由别名
-r.HandleFunc("/articles/{category}/{id:[0-9]+}",ArticleHandler).Name("article")
+```r.HandleFunc("/articles/{category}/{id:[0-9]+}",ArticleHandler).Name("article")```
 
 ### 静态文件路由
 ```
-	flag.StringVar(&dir,"dir",".","the directory to serve files form.Defaults to the current dir")
-	flag.Parse()
-	r:=mux.NewRouter()
-	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/",http.FileServer(http.Dir(dir))))
+flag.StringVar(&dir,"dir",".","the directory to serve files form.Defaults to the current dir")
+flag.Parse()
+r:=mux.NewRouter()
+r.PathPrefix("/static/").Handler(http.StripPrefix("/static/",http.FileServer(http.Dir(dir))))
 ```
 
 ### 生成url
@@ -101,8 +104,6 @@ func main()  {
 ```
 ### Middleware中间件
 mux支持为路由添加中间件
-```
-
 
 
 ```go
