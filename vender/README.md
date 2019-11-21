@@ -15,6 +15,7 @@
 
 ## Database
 - [github.com/go-xorm/xorm]
+- [github.com/jinzhu/gorm]
 - [github.com/go-sql-driver/mysql]
 - [github.com/mattn/go-sqlite3]
 - [github.com/lib/pq]
