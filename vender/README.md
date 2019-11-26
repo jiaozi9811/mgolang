@@ -7,6 +7,8 @@ https://github.com/moul/http2curl
 
 https://github.com/smallnest/goreq
 
+https://github.com/parnurzeal/gorequest
+
 
 ## mux
 - [github.com/gorilla/mux](https://github.com/jiaozi9811/mgolang/blob/master/vender/gorilla.mux.md)
