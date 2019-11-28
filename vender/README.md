@@ -12,6 +12,8 @@ https://github.com/parnurzeal/gorequest
 
 https://github.com/robbert229/jwt
 
+https://github.com/muesli/cache2go //Concurrency-safe golang caching library with expiration capabilities
+
 
 ## mux
 - [github.com/gorilla/mux](https://github.com/jiaozi9811/mgolang/blob/master/vender/gorilla.mux.md)
