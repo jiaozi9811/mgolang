@@ -12,7 +12,7 @@ https://github.com/parnurzeal/gorequest
 
 https://github.com/robbert229/jwt
 
-https://github.com/muesli/cache2go //Concurrency-safe golang caching library with expiration capabilities
+- [github.com/muesli/cache2go] //Concurrency-safe golang caching library with expiration capabilities
 
 
 ## mux
@@ -32,3 +32,5 @@ https://github.com/muesli/cache2go //Concurrency-safe golang caching library wit
 - [github.com/go-sql-driver/mysql]
 - [github.com/mattn/go-sqlite3]
 - [github.com/lib/pq]
+
+
