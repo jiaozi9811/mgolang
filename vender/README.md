@@ -14,6 +14,8 @@ https://github.com/robbert229/jwt
 
 - [github.com/muesli/cache2go] //Concurrency-safe golang caching library with expiration capabilities
 - [github.com/polaris1119/goutils] //Go语言常用工具类封装
+- [github.com/go-clog/clog]
+- [github.com/jmcvetta/randutil]
 
 
 ## mux
