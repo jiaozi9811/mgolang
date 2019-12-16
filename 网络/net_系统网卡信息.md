@@ -125,3 +125,25 @@ fmt.Printf("ones: %d bits: %d\n", ones, bits)
 network:=ip.Mask(defaultMask)
 fmt.Println(network)
 ```
+```
+func InternalIP() string {
+	inters,err:=net.Interfaces()
+
+	if err!=nil{ return "" }
+
+	for _,inter:=range inters{
+		if !strings.HasPrefix(inter.Name,"lo"){
+			addrs,err:=inter.Addrs()
+			if err!=nil{continue}
+
+			for _,addr:=range addrs{
+				fmt.Println(addr.(*net.IPNet).IP.String())
+				if ipnet,ok:=addr.(*net.IPNet);ok&&!ipnet.IP.IsLoopback(){
+					if ipnet.IP.To4()!=nil{return ipnet.IP.String()}
+				}
+			}
+		}
+	}
+	return ""
+}
+```
