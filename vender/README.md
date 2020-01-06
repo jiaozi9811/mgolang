@@ -6,7 +6,8 @@ https://github.com/lexkong/apiserver_demos
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
-  "github.com/spf13/pflag"
+  	"github.com/spf13/pflag"
+	"github.com/shirou/gopsutil"
 
 ## 必备小程序
 https://github.com/moul/http2curl
