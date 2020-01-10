@@ -8,6 +8,7 @@ https://github.com/lexkong/apiserver_demos
 	"github.com/spf13/viper"
   	"github.com/spf13/pflag"
 	"github.com/shirou/gopsutil"
+	"github.com/satori/go.uuid"
 
 ## 必备小程序
 https://github.com/moul/http2curl
