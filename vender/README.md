@@ -1,7 +1,7 @@
 # Contents
 
 [TOC]
-
+github.com/lexkong/apiserver
 https://github.com/lexkong/apiserver_demos
 
 	"github.com/fsnotify/fsnotify"
@@ -48,3 +48,10 @@ https://github.com/gopinath-langote/1build
 - [github.com/lib/pq]
 
 - [github.com/syncthing/syncthing]
+
+
+Configuration
+- https://github.com/spf13/viper
+- https://github.com/caarlos0/env
+- https://github.com/go-ini/ini
+- https://github.com/joho/godotenv
