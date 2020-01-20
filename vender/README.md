@@ -57,3 +57,6 @@ https://github.com/gopinath-langote/1build
 - https://github.com/caarlos0/env
 - https://github.com/go-ini/ini
 - https://github.com/joho/godotenv
+
+
+https://github.com/casbin/casbin
