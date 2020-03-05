@@ -120,3 +120,12 @@ cookie,err:=c.Cookie(FlashName)
 fmt.Println(cookie.Name)
 fmt.Println(cookie.Value)
 ```
+
+## bind,render,alidate捆绑,渲染,验证
+c.Bind
+c.Render
+c.Alidate
+
+##响应
+c.String	//发送带状态码的纯文本响应
+c.HTML		//发送一个带状态码的简单 html 响应
