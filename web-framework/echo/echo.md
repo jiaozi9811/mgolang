@@ -90,8 +90,9 @@ type Context interface {
 
 ## Cookie
 ```
-c.SetCookie  //创建cookie
-c.Cookie     //读取cookie
+c.SetCookie 	 //创建cookie
+c.Cookie     	//读取cookie
+cCookies	//所有cookie
 ```
 ### 创建cookie
 ```
