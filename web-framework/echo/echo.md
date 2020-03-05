@@ -86,3 +86,36 @@ type Context interface {
 	Reset(r *http.Request, w http.ResponseWriter)
 }
 ```
+
+
+## Cookie
+```
+c.SetCookie  //创建cookie
+c.Cookie     //读取cookie
+```
+### 创建cookie
+```
+func writeCookie(c echo.Context) error {
+    cookie := new(http.Cookie)
+    cookie.Name = "username"
+    cookie.Value = "jon"
+    cookie.Expires = time.Now().Add(24 * time.Hour)
+    c.SetCookie(cookie)
+    return c.String(http.StatusOK, "write a cookie")
+}
+使用 new(http.Cookie) 创建Cookie。
+cookie 的属性值会被赋值给 http.Cookie 的可导出属性。
+最后，使用 c.SetCookie(cookies) 来给响应添加 Set-Cookie 头。
+
+	c.SetCookie(&http.Cookie{
+		Name:       FlashName,
+		Value:      url.QueryEscape(flashValue),
+	})
+```
+
+### 读取cookie
+```
+cookie,err:=c.Cookie(FlashName)
+fmt.Println(cookie.Name)
+fmt.Println(cookie.Value)
+```
