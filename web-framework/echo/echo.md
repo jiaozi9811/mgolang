@@ -127,6 +127,19 @@ c.Render
 c.Alidate
 
 ## 响应
+c.String	//发送带状态码的纯文本响应 
+c.HTML		//发送一个带状态码的简单 html 响应 
+c.JSON		//发送一个带状态码的 json 对象
+c.JSONPretty	//打印出的json数据带有缩紧(可以使用空格和tab)，更为好看
+c.JSONBlob	//直接发送一个已经转换好的 json 对象
+c.XML		//转换 golang 对象为 xml 数据发送响应
+c.XMLPretty	
+c.File		//发送一个文件为内容的响应
+c.Attachment	//发送文件的方法类似，只是它会多提供一个名称
+c.Blob		//发送任意类型的数据。需要提供 content type
+c.Stream	//发送任意数据流响应。需要提供 content type，io.Reader 和状态码
+c.NoContent	//发送空内容
 
-c.String	//发送带状态码的纯文本响应
-c.HTML		//发送一个带状态码的简单 html 响应
+c.Redirect	//提供一个 url 用于重定向
+
+## 路由 
