@@ -143,3 +143,8 @@ c.NoContent	//发送空内容
 c.Redirect	//提供一个 url 用于重定向
 
 ## 路由 
+
+路径匹配顺序 
+- Static (固定路径)
+- Param (参数路径)
+- Match any (匹配所有)
