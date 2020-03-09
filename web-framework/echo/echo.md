@@ -176,10 +176,13 @@ e.Static("/", "assets")
 ```
 
 ## Echo#File() 
-```Echo#File(path, file string)``` 使用 url 路径注册一个新的路由去访问某个静态文件 
-用法 1 
-将public/index.html作为主页 
-```e.File("/", "public/index.html")``` 
-用法 2 
-给images/favicon.ico一个静态路径 
+```Echo#File(path, file string)```  
+使用 url 路径注册一个新的路由去访问某个静态文件 
+
+用法 1  
+将public/index.html作为主页  
+```e.File("/", "public/index.html")```  
+
+用法 2  
+给images/favicon.ico一个静态路径  
 ```e.File("/favicon.ico", "images/favicon.ico")``` 
