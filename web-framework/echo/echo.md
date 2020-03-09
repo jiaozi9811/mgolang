@@ -148,3 +148,29 @@ c.Redirect	//提供一个 url 用于重定向
 - Static (固定路径)
 - Param (参数路径)
 - Match any (匹配所有)
+
+### 组路由 
+
+### 路由列表 
+Echo#Routes() []*Route会根据定义的顺序列出所有已经注册的路由。每一个路由包含 http 方法，路径和对应的处理器
+```
+data, err := json.MarshalIndent(e.Routes(), "", "  ")
+if err != nil {
+    return err
+}
+ioutil.WriteFile("routes.json", data, 0644)
+```
+
+## 静态文件 
+
+用法1 
+```
+e := echo.New()
+e.Static("/static", "assets")
+```
+
+用法2 
+```
+e := echo.New()
+e.Static("/", "assets")
+```
