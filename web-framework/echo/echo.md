@@ -213,3 +213,10 @@ e.Pre(middleware.WWWRedirect())
 
 将带 www 的请求重定向到不带 www 的请求。例如，http://www.laily.net重定向到http://laily.net 
 e.Pre(middleware.NonWWWRedirect()) 
+
+## HTTP2/HTTPS
+
+生成自验证证书,命令会生一个cert.pem和key.pem文件
+go run $GOROOT/src/crypto/tls/generate_cert.go --host localhost
+
+e.Logger.Fatal(e.StartTLS(":443","cert.pem","key.pem"))
