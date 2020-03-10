@@ -191,3 +191,25 @@ e.Static("/", "assets")
 
 ### 模板渲染 
 Context#Render(code int, name string, data interface{}) error用于渲染一个模板，然后发送一个 text/html 的状态响应。可以使用任何模板引擎，只要赋值给Echo.Renderer 
+
+## 中间件 
+Recover中间件从 panic 链中的任意位置恢复程序， 打印堆栈的错误信息，并将错误集中交给HTTPErrorHandler处理 
+e.User(middleware.Recover()) 
+
+Logger 中间件记录了每一个请求的信息
+e.Use(middleware.Logger()) 
+
+HTTPS 重定向中间件将 http 请求重定向到 https,例如，http://laily.net将被重定向到https://laily.net。 
+e.Pre(middleware.HTTPSRedirect()) 
+
+HTTPS WWW 重定向将 http 请求重定向到带 www 的https 请求 。例如，http://laily.net将被重定向到https://www.laily.net。
+e.Pre(middleware.HTTPSWWWRedirect()) 
+
+HTTPS NonWWW 将 http 请求重定向到不带 www 的 https 请求。例如，http://www.laily.net将被重定向到https://laily.net 
+e.Pre(middleware.HTTPSNonWWWRedirect())
+
+将不带 www 的请求重定向到带 www 的请求。例如，http://laily.net重定向到http://www.laily.net 
+e.Pre(middleware.WWWRedirect()) 
+
+将带 www 的请求重定向到不带 www 的请求。例如，http://www.laily.net重定向到http://laily.net 
+e.Pre(middleware.NonWWWRedirect()) 
