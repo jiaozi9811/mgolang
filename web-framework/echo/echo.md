@@ -186,3 +186,8 @@ e.Static("/", "assets")
 用法 2  
 给images/favicon.ico一个静态路径  
 ```e.File("/favicon.ico", "images/favicon.ico")``` 
+
+## 模板
+
+### 模板渲染 
+Context#Render(code int, name string, data interface{}) error用于渲染一个模板，然后发送一个 text/html 的状态响应。可以使用任何模板引擎，只要赋值给Echo.Renderer 
