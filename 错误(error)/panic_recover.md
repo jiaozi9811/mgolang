@@ -19,7 +19,7 @@ errors.Errorf("errorinfo")
 
 
 
-panic
+## panic 
 当错误条件（我们所测试的代码）很严苛且不可恢复，程序不能继续运行时，可以使用 panic 函数产生一个中止程序的运行时错误
 panic 接收一个做任意类型的参数，通常是字符串，在程序死亡时被打印出来。在Go 运行时负责中止程序并给出调试信息
 
@@ -27,5 +27,16 @@ panic 接收一个做任意类型的参数，通常是字符串，在程序死�
 
 panic 会导致栈被展开直到 defer 修饰的 recover() 被调用或者程序中止
 
-recover
+## recover 
 recover 只能在 defer 修饰的函数中使用：用于取得 panic 调用中传递过来的错误值，如果是正常执行，调用 recover 会返回 nil，且没有其它效果
+
+go通过panic和recover进行抛出错误和捕获错误的机制
+```
+func test(){
+ defer func(){
+   if err:=recover();err!=nil{fmt.Println(err)}
+ }()
+ panic("error!")
+}
+```
+如果函数F发生fanic，F中的defer函数仍然会执行，调用F的函数中的defer也会执行，直到goroutine上最上层函数结束，报告相应的错误。
