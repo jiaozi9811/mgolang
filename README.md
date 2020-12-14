@@ -1,5 +1,9 @@
 # mgolang
 
+[Go 语言设计与实现](https://draveness.me/golang/)
+
+[go学习线路图](http://www.topgoer.com/%E5%BC%80%E6%BA%90/go%E5%AD%A6%E4%B9%A0%E7%BA%BF%E8%B7%AF%E5%9B%BE.html)
+
 <https://github.com/hyper0x/Golang_Puzzlers>
 
 ## network
